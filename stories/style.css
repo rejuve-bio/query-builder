@@ -1,0 +1,7 @@
+html,
+body.sb-show-main,
+body.sb-show-main #storybook-root {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
