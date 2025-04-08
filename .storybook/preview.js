@@ -10,16 +10,16 @@ const preview = {
         date: /Date$/i,
       },
     },
-    decorators: [
-      withThemeByClassName({
-        themes: {
-          light: "",
-          dark: "dark",
-        },
-        defaultTheme: "light",
-      }),
-    ],
   },
+  decorators: [
+    withThemeByClassName({
+      themes: {
+        light: "",
+        dark: "dark",
+      },
+      defaultTheme: "light",
+    }),
+  ],
 };
 
 export default preview;
