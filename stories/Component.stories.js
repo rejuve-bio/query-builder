@@ -1,5 +1,5 @@
 import { fn } from "@storybook/test";
-import Component from "../src/Component";
+import { Component } from "../src/Component";
 import "./style.css";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
