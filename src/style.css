@@ -1,4 +1,7 @@
-@import "tailwindcss";
+@layer qbtw-theme, qbtw-components, qbtw-utilities;
+
+@import "tailwindcss/theme.css" layer(qbtw-theme);
+@import "tailwindcss/utilities.css" layer(qbtw-utilities);
 @import "tw-animate-css";
 @import "@xyflow/react/dist/style.css";
 @custom-variant dark (&:is(.dark *));
@@ -115,13 +118,16 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.query-builder .sb-bg.dots {
+  @apply fill-foreground/20;
+}
+
+.query-builder .react-flow__handle {
+  @apply border-border bg-transparent rounded-full hover:border-foreground;
+}
+
+.query-builder .react-flow__controls-button {
+  @apply border-border bg-transparent;
 }
 
 .animate-bounce-once {
@@ -143,14 +149,6 @@
     transform: translateY(0);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
-}
-
-.react-flow {
-  --xy-controls-button-border-color: var(--border);
-  --xy-handle-background-color: transparent;
-  --xy-handle-border-color: var(--background);
-  --xy-controls-button-background-color: var(--background);
-  --xy-background-color: var(--background);
 }
 
 .qb-bg.dots {
