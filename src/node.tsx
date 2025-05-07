@@ -35,6 +35,7 @@ import { QueryBuilderContext } from "./context";
 import { createAvatar } from "@dicebear/core";
 import { identicon } from "@dicebear/collection";
 import deepDiff from "deep-diff";
+import { NodeDefinition } from "./builder";
 
 interface IconProperties {
   fillColor?: string;
@@ -364,3 +365,87 @@ function ParametersList(props: { parameters: { [k: string]: any } }) {
 export default React.memo(Node, (p, c) => {
   return !deepDiff(p.data, c.data);
 });
+
+export function generateNodeStyle(
+  nodeDefinitions: NodeDefinition[]
+): NodeClassDefinitionMap {
+  const uniqueCategories = new Set(
+    nodeDefinitions.map((n) => n.category).filter((c) => c)
+  );
+  const category = Array.from(uniqueCategories).reduce((acc, c, i) => {
+    return { ...acc, [c]: styles[i % styles.length] };
+  }, {} as NodeClassDefinitionMap);
+  return nodeDefinitions.reduce((acc, n, i) => {
+    return {
+      ...acc,
+      [n.id]:
+        uniqueCategories.size > 1
+          ? category[n.category]
+          : styles[i % styles.length],
+    };
+  }, {});
+}
+
+const styles: NodeClassDefinitionMap["string"][] = [
+  {
+    form: "bg-purple-600 dark:bg-purple-700",
+    icon: "bg-purple-500 dark:bg-purple-900",
+    params:
+      "bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-100",
+  },
+  {
+    icon: "bg-orange-500 dark:bg-orange-900",
+    params:
+      "bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-100",
+    form: "bg-orange-500 dark:bg-orange-700",
+  },
+  {
+    icon: "bg-pink-500 dark:bg-pink-900",
+    params: "bg-pink-100 text-pink-700 dark:bg-pink-950 dark:text-pink-100",
+    form: "bg-pink-500 dark:bg-pink-700",
+  },
+  {
+    icon: "bg-lime-500 dark:bg-lime-900",
+    params: "bg-lime-100 text-lime-700 dark:bg-lime-950 dark:text-lime-100",
+    form: "bg-lime-500 dark:bg-lime-700",
+  },
+  {
+    icon: "bg-blue-500 dark:bg-blue-900",
+    params: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-100",
+    form: "bg-blue-500 dark:bg-blue-700",
+  },
+  {
+    icon: "bg-yellow-500 dark:bg-yellow-900",
+    params:
+      "bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-100",
+    form: "bg-yellow-500 dark:bg-yellow-700",
+  },
+  {
+    icon: "bg-violet-500  dark:bg-violet-900",
+    params:
+      "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-100",
+    form: "bg-violet-500 dark:bg-violet-700",
+  },
+  {
+    icon: "bg-amber-600 dark:bg-amber-900",
+    params: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-100",
+    form: "bg-amber-600 dark:bg-amber-700",
+  },
+  {
+    form: "bg-indigo-500 dark:bg-indigo-700",
+    icon: "bg-indigo-500 dark:bg-indigo-900",
+    params:
+      "bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-100",
+  },
+  {
+    icon: "bg-emerald-500 dark:bg-emerald-900",
+    params:
+      "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100",
+    form: "bg-emerald-500 dark:bg-emerald-700",
+  },
+  {
+    icon: "bg-rose-500 dark:bg-rose-900",
+    params: "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-100",
+    form: "bg-rose-500 dark:bg-rose-700",
+  },
+];
