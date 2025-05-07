@@ -232,7 +232,7 @@ export function Icon(props: { type: string; size?: "small" | "big" }) {
   const svg = avatar.toString();
 
   return (
-    <div className={cssClass}>
+    <div className={cssClass} title={props.type}>
       <div dangerouslySetInnerHTML={{ __html: svg }} />
     </div>
   );
