@@ -369,7 +369,6 @@ export function QueryBuilder(props: QueryBuilderProps) {
       <div className="absolute bottom-10 left-24 z-20">
         <NodeSelector onSelect={addNode} hasInsertedNodes={!!nodes.length} />
       </div>
-      <Toaster richColors />
     </div>
   );
 }
@@ -441,27 +440,31 @@ function NodeSelector(props: {
       </PopoverTrigger>
       <PopoverContent side="top" className="p-0 shadow-2xl">
         <h4 className="p-4 font-bold shadow">Select a node type </h4>
-        <Accordion type="single">
-          {Object.keys(groups).map((p) => (
-            <AccordionItem key={p} value={p} className="px-4">
-              <AccordionTrigger>{p}</AccordionTrigger>
-              <AccordionContent className="px-2">
-                <ul>
-                  {groups[p]?.map((n) => (
-                    <li
-                      key={n.id}
-                      className={cssClass}
-                      onClick={() => props.onSelect(n.id)}
-                    >
-                      <Icon type={n.id} size="small" />
-                      <p className="ms-2">{n.name}</p>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <div className="max-h-[70vh] overflow-y-auto">
+          <Accordion type="single">
+            {Object.keys(groups).map((p) => (
+              <AccordionItem key={p} value={p} className="px-4">
+                <AccordionTrigger>
+                  {p == "undefined" ? "Uncategorized" : p}
+                </AccordionTrigger>
+                <AccordionContent className="px-2">
+                  <ul>
+                    {groups[p]?.map((n) => (
+                      <li
+                        key={n.id}
+                        className={cssClass}
+                        onClick={() => props.onSelect(n.id)}
+                      >
+                        <Icon type={n.id} size="small" />
+                        <p className="ms-2">{n.name}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </PopoverContent>
     </Popover>
   );
