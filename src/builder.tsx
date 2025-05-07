@@ -441,7 +441,7 @@ function NodeSelector(props: {
       <PopoverContent side="top" className="p-0 shadow-2xl">
         <h4 className="p-4 font-bold shadow">Select a node type </h4>
         <div className="max-h-[70vh] overflow-y-auto">
-          <Accordion type="single">
+          <Accordion type="single" defaultValue={Object.keys(groups)[0]}>
             {Object.keys(groups).map((p) => (
               <AccordionItem key={p} value={p} className="px-4">
                 <AccordionTrigger>
