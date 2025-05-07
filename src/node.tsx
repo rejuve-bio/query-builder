@@ -367,7 +367,8 @@ export default React.memo(Node, (p, c) => {
 });
 
 export function generateNodeStyle(
-  nodeDefinitions: NodeDefinition[]
+  nodeDefinitions: NodeDefinition[],
+  colorByCategory?: boolean
 ): NodeClassDefinitionMap {
   const uniqueCategories = new Set(
     nodeDefinitions.map((n) => n.category).filter((c) => c)
@@ -379,7 +380,7 @@ export function generateNodeStyle(
     return {
       ...acc,
       [n.id]:
-        uniqueCategories.size > 1
+        colorByCategory && uniqueCategories.size > 1
           ? category[n.category]
           : styles[i % styles.length],
     };
@@ -421,10 +422,10 @@ const styles: NodeClassDefinitionMap["string"][] = [
     form: "bg-yellow-500 dark:bg-yellow-700",
   },
   {
-    icon: "bg-violet-500  dark:bg-violet-900",
+    icon: "bg-emerald-500 dark:bg-emerald-900",
     params:
-      "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-100",
-    form: "bg-violet-500 dark:bg-violet-700",
+      "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100",
+    form: "bg-emerald-500 dark:bg-emerald-700",
   },
   {
     icon: "bg-amber-600 dark:bg-amber-900",
@@ -438,14 +439,14 @@ const styles: NodeClassDefinitionMap["string"][] = [
       "bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-100",
   },
   {
-    icon: "bg-emerald-500 dark:bg-emerald-900",
-    params:
-      "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100",
-    form: "bg-emerald-500 dark:bg-emerald-700",
-  },
-  {
     icon: "bg-rose-500 dark:bg-rose-900",
     params: "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-100",
     form: "bg-rose-500 dark:bg-rose-700",
+  },
+  {
+    icon: "bg-violet-500  dark:bg-violet-900",
+    params:
+      "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-100",
+    form: "bg-violet-500 dark:bg-violet-700",
   },
 ];
