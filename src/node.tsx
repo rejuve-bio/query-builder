@@ -212,9 +212,7 @@ export function Icon(props: { type: string; size?: "small" | "big" }) {
   const svgSize = props.size == "small" ? 24 : 48;
   const sizeClass = props.size == "small" ? "h-10 w-10" : "h-24 w-24";
   const cssClass =
-    sizeClass +
-    " flex items-center justify-center rounded-full bg-black " +
-    iconClass;
+    sizeClass + " flex items-center justify-center rounded-full " + iconClass;
 
   if (NodeIcon) {
     return (
@@ -289,7 +287,7 @@ function ParametersForm(props: {
   const formClass =
     classes?.[props.values.type]?.form || " bg-stone-500 dark:bg-stone-600";
   const [open, setOpen] = useState(false);
-  const cssClass = "p-4 rounded-t text-white bg-black " + formClass;
+  const cssClass = "p-4 rounded-t text-white " + formClass;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
