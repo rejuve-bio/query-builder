@@ -93,7 +93,7 @@ const defaultEdgeOptions = {
   animated: true,
   markerEnd: {
     type: MarkerType.ArrowClosed,
-    color: "hsl(var(--foreground) / 0.1)",
+    color: "var(--marker-fill)",
   },
 };
 
@@ -153,7 +153,7 @@ export function QueryBuilder(props: QueryBuilderProps) {
     const node: ReactFlowNode = {
       id: nanoid(),
       type: "custom",
-      data: { type, animate: true },
+      data: { qb_node_type: type, animate: true },
       position: screenToFlowPosition({
         x: document.body.clientWidth / 2,
         y: 0,
@@ -186,8 +186,8 @@ export function QueryBuilder(props: QueryBuilderProps) {
     if (!sourceNode || !targetNode) throw "Not possible to connect nodes";
 
     const options = getAllEdgesForNodesTypes(
-      sourceNode?.data.type as string,
-      targetNode?.data.type as string
+      sourceNode?.data.qb_node_type as string,
+      targetNode?.data.qb_node_type as string
     );
 
     if (!options.length) throw "Not possible to connect nodes";
@@ -325,8 +325,8 @@ export function QueryBuilder(props: QueryBuilderProps) {
         const source = initialNodes.find((n) => n.id == e.source);
         const target = initialNodes.find((n) => n.id == e.target);
         const options = getAllEdgesForNodesTypes(
-          (source?.data as any).type as string,
-          (target?.data as any).type as string
+          (source?.data as any).qb_node_type as string,
+          (target?.data as any).qb_node_type as string
         );
         edge.data = { ...edge.data, options };
         return edge;

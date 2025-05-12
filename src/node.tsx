@@ -70,10 +70,6 @@ export interface NodeClassDefinitionMap {
   [nodeType: string]: NodeClassDefinition;
 }
 
-interface NodeData {
-  type: string;
-}
-
 export interface AvailableConnection {
   id: string;
   type: string;
@@ -83,7 +79,7 @@ export interface AvailableConnection {
 
 export interface CustomNodeProps extends NodeProps {
   data: {
-    type: string;
+    qb_node_type: string;
     animate?: boolean;
   };
   onAddNode: Function;
@@ -113,8 +109,8 @@ function Node(props: CustomNodeProps) {
   const { updateNode } = useReactFlow();
   const wrapper = useRef<HTMLDivElement>(null);
   const params = useRef<HTMLDivElement>(null);
-  const data = props.data as unknown as NodeData;
-  const type = data.type;
+  const data = props.data as CustomNodeProps["data"];
+  const type = data.qb_node_type;
   const { edgeDefinitions } = useContext(QueryBuilderContext);
   const connections = useMemo(() => getAvailableConnections(type), [type]);
   const wrapperClass = `pointer-events-none ${
@@ -286,7 +282,8 @@ function ParametersForm(props: {
 }) {
   const { style: classes } = useContext(QueryBuilderContext);
   const formClass =
-    classes?.[props.values.type]?.form || " bg-stone-500 dark:bg-stone-600";
+    classes?.[props.values.qb_node_type]?.form ||
+    " bg-stone-500 dark:bg-stone-600";
   const [open, setOpen] = useState(false);
   const cssClass = "p-4 rounded-t text-white " + formClass;
 
@@ -295,7 +292,7 @@ function ParametersForm(props: {
       <PopoverTrigger onAuxClick={() => {}}>{props.children}</PopoverTrigger>
       <PopoverContent className="border-0 p-0 dark:border" side="right">
         <div className="rounded-b shadow-2xl">
-          <div className={cssClass}>{props.values.type} parameters</div>
+          <div className={cssClass}>{props.values.qb_node_type} parameters</div>
           <form onSubmit={props.onSubmit}>
             <div className="p-4">
               {!props.fields?.length && (
@@ -335,7 +332,7 @@ function ParametersForm(props: {
 function ParametersList(props: { parameters: { [k: string]: any } }) {
   const { style: classes } = useContext(QueryBuilderContext);
   const parametersClass =
-    classes?.[props.parameters.type]?.params ||
+    classes?.[props.parameters.qb_node_type]?.params ||
     " bg-stone-100 text-stone-700 dark:bg-stone-700 dark:text-stone-100";
   const cssClass =
     "rounded-xl border-4 border-background px-4 py-2 font-mono text-xs  " +
@@ -343,7 +340,7 @@ function ParametersList(props: { parameters: { [k: string]: any } }) {
 
   const list = useMemo(() => {
     const arr: { key: string; value: string }[] = [];
-    const blacklist = ["type", "error", "animate"];
+    const blacklist = ["qb_node_type", "error", "animate"];
     Object.keys(props.parameters).forEach((k) => {
       if (blacklist.includes(k) || !props.parameters[k]) return;
       arr.push({ key: k, value: props.parameters[k] });
