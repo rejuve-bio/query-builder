@@ -298,12 +298,14 @@ function ParametersForm(props: {
           <div className={cssClass}>{props.values.type} parameters</div>
           <form onSubmit={props.onSubmit}>
             <div className="p-4">
-              <FormField
-                name="id"
-                label="ID"
-                inputType="input"
-                defaultValue={props.values.id}
-              />
+              {!props.fields?.length && (
+                <FormField
+                  name="id"
+                  label="ID"
+                  inputType="input"
+                  defaultValue={props.values.id}
+                />
+              )}
               {props.fields?.map((f) => (
                 <FormField
                   {...f}
