@@ -294,7 +294,7 @@ function ParametersForm(props: {
         <div className="rounded-b shadow-2xl">
           <div className={cssClass}>{props.values.qb_node_type} parameters</div>
           <form onSubmit={props.onSubmit}>
-            <div className="p-4">
+            <div className="p-4 max-h-[70vh] overflow-y-auto">
               {!props.fields?.length && (
                 <FormField
                   name="id"
